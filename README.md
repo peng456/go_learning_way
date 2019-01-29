@@ -466,14 +466,13 @@ https://segmentfault.com/q/1010000007160096
 
 
 确实是
-============
+
 1、
-	var db *sql.DB
-	var err error
-	db , err = sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
+   var db *sql.DB
+   var err error
+   db , err = sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
   
-2、	db , err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
-============
+2、 db , err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
 
 
 24、go 文件读写操作
