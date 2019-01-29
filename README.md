@@ -1,7 +1,7 @@
 # go_learning_way
 
-
-go 
+推荐 https://github.com/yangwenmai/learning-golang
+go  学习笔记
 
 1、起源  谷歌开发的。。。。。（企业背书好）
 
@@ -390,8 +390,90 @@ LiteIDE
 
 
 
-23、go  mysql 操作
+23、go  mysql 操作   （参考 https://blog.csdn.net/kenkao/article/details/47857795）
 
+import (
+"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+)
+
+main()
+// 初始化
+	db , err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
+
+插入
+	sqlstr := "INSERT baskball_user (name,nick,sex,weixinid) values (?,?,?,?)"
+	stmt, err := db.Prepare(sqlstr)
+	checkErr(err)
+	res, err := stmt.Exec("tony","xiaxia",1,"ghjkvgbhjnkmvgbhjnk")
+	checkErr(err)
+
+	id, err := res.LastInsertId()
+	checkErr(err)
+	fmt.Println(id)
+
+// 查询
+
+	rows, err := db.Query("SELECT * FROM baskball_user")
+	checkErr(err)
+	
+	columns, _ := rows.Columns()
+	scanArgs := make([]interface{}, len(columns))
+	values := make([]interface{}, len(columns))
+	for i := range values {
+		scanArgs[i] = &values[i]
+	}
+
+
+	for rows.Next() {
+		err = rows.Scan(scanArgs...)
+		record := make(map[string]string)
+		for i, col := range values {
+			if col != nil {
+				record[columns[i]] = string(col.([]byte))
+			}
+		}
+    
+    fmt.Println(record)
+		fmt.Println(record["id"])
+	}
+
+// 修改
+	sqlstr = "UPDATE baskball_user SET name=? WHERE id=?"
+	stmt, err = db.Prepare(sqlstr)
+	checkErr(err)
+	res, err = stmt.Exec("nice", 1)
+	checkErr(err)
+	num, err := res.RowsAffected()
+	checkErr(err)
+	fmt.Println(num)
+  
+// 删除
+	stmt, err = db.Prepare(`DELETE FROM baskball_user WHERE id=?`)
+	checkErr(err)
+	res, err = stmt.Exec(5)
+	checkErr(err)
+	num, err = res.RowsAffected()
+	checkErr(err)
+	fmt.Println(num)
+
+go 语言中  =   :=  的异同
+https://segmentfault.com/q/1010000007160096
+
+=    必须先声明
+
+:=   类型自动推断
+
+
+确实是
+============
+1、
+	var db *sql.DB
+	var err error
+	db , err = sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
+  
+2、	db , err := sql.Open("mysql", "root:root@tcp(127.0.0.1:3306)/baskball2019?charset=utf8")
+============
 
 
 24、go 文件读写操作
@@ -411,7 +493,8 @@ LiteIDE
 
 
 
-29、
+29、go 框架
+gin  beego
 
 
 
