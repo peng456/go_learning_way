@@ -476,7 +476,18 @@ https://segmentfault.com/q/1010000007160096
 
 
 24、go 文件读写操作
+	// 文件
+	// 1、创建文件
+	userFileName := "test.txt"
+	fout,err := os.Create(userFileName)
+	defer fout.Close()
+	checkErr(err)
 
+	for i:= 0;i<10;i++ {
+		fout.Write([]byte("Just a test yeah !!!"))
+		fout.WriteString("Just a test!\r\n")
+	}
+	// 后续有时间再补充。先去写功能吧
 
 
 25、网络操作
